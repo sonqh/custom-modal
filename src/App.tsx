@@ -1,24 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Modal from "./components/Modal";
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const customStyles = {
+    borderRadius: "10px",
+    padding: "20px",
+    width: "auto",
+    height: "auto",
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="App flex flex-col items-center justify-center min-h-screen">
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="p-3 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:border-blue-400 hover:scale-105 "
+      >
+        Open Modal
+      </button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        header={<div>Custom Header</div>}
+        title="Custom Title"
+        customStyles={customStyles}
+        animation={{
+          initial: { opacity: 0, scale: 0.8 },
+          animate: { opacity: 1, scale: 1 },
+          exit: { opacity: 0, scale: 0.8 },
+          transition: {
+            duration: 0.5,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+          },
+        }}
+        position="center"
+        fullscreen={false}
+      >
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          This is the content of the modal with custom styles and animation.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </Modal>
     </div>
   );
 }
